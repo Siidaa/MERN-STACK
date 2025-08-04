@@ -1,36 +1,18 @@
-require('dotenv').config()
+import express from 'express'
+import WorkoutRouter from './routes/workouts.js';
+import dotenv from 'dotenv'
+dotenv.config();
 
-const express = require('express')
-const mongoose = require('mongoose')
-const workoutRoutes = require('./routes/workouts')
+const app = express();
+const port = process.env.PORT
 
-// express app
-const app = express()
+app.use('/api/workout', WorkoutRouter);
+app.use(express.json());
 
-// middleware
-app.use(express.json())
+app.get('/' , (req , res)=>{
 
-app.use((req, res, next) => {
-    console.log(req.path, req.mehtod)
-    next()
+   res.send('hello from simple server :)')
+
 })
 
-//routes
-app.use('/api/workouts', workoutRoutes)
-
-// connect to db
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    // listen for requests
-    app.listen(process.env.PORT, () => {
-      console.log('connected to db & listening on port ', process.env.PORT)
-})
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-
-
-
-  
+app.listen(port, () => console.log(`Server connected ${port}`));

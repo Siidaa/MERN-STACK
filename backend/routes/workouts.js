@@ -1,18 +1,20 @@
-const express = require('express')
-const Workout = require('.../models/workoutModel')
-const router = express.Router()
+import express from 'express'
+import Workout from '../models/workoutModel.js'
 
-router.get('/', (req , res) => {
+const WorkoutRouter = express.Router();
+
+
+WorkoutRouter.get('/', (req , res) => {
     res.json({mssg: 'GET all workouts'})
 })
 
 // GET a single workout
-router.get('/:id',(req, res) => {
+WorkoutRouter.get('/:id',(req, res) => {
     res.json({mssg: 'GET a single workout'})
 })
 
 // POST a new workout
-router.post('/', async (req, res) => {
+WorkoutRouter.post('/', async (req, res) => {
     const {title, load, reps} = req.body
 
     try {
@@ -25,13 +27,14 @@ router.post('/', async (req, res) => {
 })
 
 //DELETE  a workout
-router.delete('/:id', (req, res) => {
+WorkoutRouter.delete('/:id', (req, res) => {
     res.json({mssg: 'DELETE workout'})
 })
 
-router.patch('/:id', (req, res) => {
+WorkoutRouter.patch('/:id', (req, res) => {
     res.json({mssg: 'UPDATE a workout'})
 })
 
 
-module.exports = router
+// module.exports = router
+export default WorkoutRouter;
